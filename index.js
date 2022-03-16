@@ -245,6 +245,130 @@ function firstPrompt() {
     });
 }
 
+// "View all employees",
+function allEmployees() {
+  let results = db.query(
+    "SELECT employee.id, employee.first_name, employee.last_name, role.title, department.d_name AS department, role.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN department on role.department_id = department.id LEFT JOIN employee manager on manager.id = employee.manager_id;",
+
+    function (error, results) {
+      if (error) throw error;
+      console.table(results);
+    }
+  );
+}
+
+// "View all roles"
+function allRoles() {
+  let rolesAll = db.query(
+    'SELECT title, salary, department_id FROM role;',
+
+    function (error, rolesAll) {
+      console.table(rolesAll);
+      if (error) throw error;
+    }
+  );
+}
+
+// // "View all employees by department",
+// function allByDepartment() {
+//   let department = db.query(
+//     'SELECT employee.id, employee.first_name, employee.last_name, department.d_name FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN department department on role.department_id = department.id WHERE department.id;',
+
+//     function (error, department) {
+//       if (error) throw error;
+//       console.table(department);
+//     }
+//   );
+// }
+
+// // "View all employees by manager",
+// function AllByManager() {
+//   let manager = db.query(
+//     'SELECT employee.id, employee.first_name, employee.last_name, department.d_name, employee.manager_id AS department, role.title FROM employee LEFT JOIN role on role.id = employee.role_id LEFT JOIN department ON department.id = role.department_id WHERE manager_id;',
+
+//     function (error, manager) {
+//       if (error) throw error;
+//       console.table(manager);
+//     }
+//   );
+// }
+
+// // "Update employee manager"
+// function updateByManager(managerId, employeeId) {
+//   let updateManager = db.query('UPDATE employee SET manager_id = ? WHERE id = ?', [managerId, employeeId], function (error, updateManager) {
+//     if (error) throw error;
+//     // console.table(manager)
+//   });
+
+//   AllByManager();
+// }
+
+// // "Add employee"
+// function addEmployee(employeeFirst, employeeLast, department, manager) {
+//   let add = db.query('INSERT INTO employee SET first_name = ?, last_name = ?, role_id = ?, manager_id = ?', [employeeFirst, employeeLast, department, manager], function (error, add) {
+//     if (error) throw error;
+//   });
+
+//   allEmployees();
+// }
+
+// // Shows departments only, without employees
+// function departmentTable() {
+//   let depTable = db.query(
+//     'SELECT d_name FROM department;',
+
+//     function (error, depTable) {
+//       if (error) throw error;
+//       console.table(depTable);
+//     }
+//   );
+// }
+
+// // "Add Department"
+// function addDepartment(department) {
+//   let department = db.query('INSERT INTO department SET d_name = ?', [department], function (error, department) {
+//     if (error) throw error;
+//     // console.table(manager)
+//   });
+
+//   departmentTable();
+// }
+
+// // "Add role"
+// function addRole(title, salary, department_id) {
+//   let newRole = db.query('INSERT INTO role SET title = ?, salary = ?, department_id = ?', [title, salary, department_id], function (error, newRole) {
+//     if (error) throw error;
+//     // console.table(manager)
+//   });
+
+//   allRoles();
+// }
+
+// // "Remove employee"
+// function removeEmployee(id) {
+//   let add = db.query('DELETE FROM employee WHERE id = ?', [id], function (error, id) {
+//     if (error) throw error;
+//   });
+
+//   allEmployees();
+// }
+
+// // "Update employee role",
+// function updateByRole(employeeId, roleId) {
+//   let byRole = db.query(
+//     'UPDATE employee SET role_id = ? WHERE id = ?',
+
+//     [roleId, employeeId],
+//     function (error, role) {
+//       if (error) throw error;
+//     }
+//   );
+//   allByDepartment();
+// }
+
+// Start server after DB connection
+
+// Connects mysql2 server and runs init on startup
 
 db.connect((err) => {
   if (err) throw err;

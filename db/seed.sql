@@ -1,6 +1,6 @@
 use employee_tracker;
 
-INSERT INTO department(name)
+INSERT INTO department(department)
 VALUES
   ('Sales'),
   ('Engineering'),
