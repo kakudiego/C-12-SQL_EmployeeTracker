@@ -67,3 +67,11 @@ ALTER TABLE new_table ADD COLUMN foreign_key INTEGER;
 db.query(`SELECT * FROM new_database`, (err, rows) => {
   console.log(rows);
 });
+
+
+// C-12
+source db/schema.sql;
+source db/seed.sql;
+SELECT * FROM department;
+SELECT * FROM employee;
+SELECT * FROM role;

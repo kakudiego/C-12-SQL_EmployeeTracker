@@ -10,9 +10,7 @@ function firstPrompt() {
 
   console.log(`
     ==============================
-    =                            =
-    =      Employee Manager      =
-    =                            =
+    =      Employee Tracker      =
     ==============================
     `);
 
@@ -41,11 +39,11 @@ function firstPrompt() {
       // Promise
     })
     .then((answers) => {
-      // Start switch statement
       switch (answers.questions) {
         // MVP
         case 'View all departments':
           allDepartments();
+
           firstPrompt();
 
           break;
@@ -53,6 +51,7 @@ function firstPrompt() {
         // MVP
         case 'View all Roles':
           allRoles();
+
           firstPrompt();
 
           break;
@@ -60,65 +59,70 @@ function firstPrompt() {
         // MVP
         case 'View all employees':
           allEmployees();
+
           firstPrompt();
 
           break;
 
-        // // MVP
-        // case 'Add Department':
-        //   inquirer
-        //     .prompt([
-        //       {
-        //         name: 'Department',
-        //         type: 'input',
-        //         message: 'Please enter the department you would like to add?',
-        //         validate: (answer) => {
-        //           if (answer !== '') {
-        //             return true;
-        //           }
-        //           return 'Please enter at least one character.';
-        //         },
-        //       },
-        //     ])
-        //     .then((answers) => {
-        //       // Adds department to database
-        //       addDepartment(answers.Department);
-        //       firstPrompt();
-        //     });
-        //   break;
+        // MVP
+        case 'Add Department':
+          inquirer
+            .prompt([
+              {
+                name: 'department',
+                type: 'input',
+                message: 'Enter the new department:',
+                validate: (answer) => {
+                  if (answer !== '') {
+                    return true;
+                  }
+                  return 'Invalid! Try again.';
+                },
+              },
+            ])
+            .then((answers) => {
+              console.log('+++++ New Department created +++++');
+              addDepartment(answers.department);
 
-        // // MVP
-        // case 'Add Role':
-        //   inquirer
-        //     .prompt([
-        //       {
-        //         name: 'title',
-        //         type: 'input',
-        //         message: "Please enter the role's title.",
-        //         validate: (answer) => {
-        //           if (answer !== '') {
-        //             return true;
-        //           }
-        //           return 'Please enter at least one character.';
-        //         },
-        //       },
-        //       {
-        //         name: 'salary',
-        //         type: 'input',
-        //         message: "Please enter the role's salary.",
-        //       },
-        //       {
-        //         name: 'department_id',
-        //         type: 'input',
-        //         message: 'Please enter the department id.',
-        //       },
-        //     ])
-        //     .then((answers) => {
-        //       // Adds role to database
-        //       addRole(answers.title, answers.salary, answers.department_id);
-        //       firstPrompt();
-        //     });
-        //   break;
+              firstPrompt();
+            });
+
+          break;
+
+        // MVP
+        case 'Add Role':
+          inquirer
+            .prompt([
+              {
+                name: 'title',
+                type: 'input',
+                message: 'Enter the new role:',
+                validate: (answer) => {
+                  if (answer !== '') {
+                    return true;
+                  }
+                  return 'Invalid! Try again.';
+                },
+              },
+              {
+                name: 'salary',
+                type: 'input',
+                message: 'Enter salary ($$$$$.$$):',
+              },
+              {
+                name: 'department_id',
+                type: 'input',
+                message: 'Enter the department_id (1=Sales | 2=Engineering | 3=Finance | 4=Legal)',
+              },
+            ])
+            .then((answers) => {
+              console.log('+++++ New Role created +++++');
+              addRole(answers.title, answers.salary, answers.department_id);
+
+              firstPrompt();
+            });
+
+          break;
 
         // // MVP
         // case 'Add employee':
@@ -294,25 +298,19 @@ function allRoles() {
   );
 }
 
-// // "Add Department"
-// function addDepartment(department) {
-//   let department = db.query('INSERT INTO department SET d_name = ?', [department], function (error, department) {
-//     if (error) throw error;
-//     // console.table(manager)
-//   });
+// "Add Department"
+function addDepartment(department) {
+  var department = db.query('INSERT INTO department SET department = ?', [department], function (error, department) {
+    if (error) throw error;
+  });
+}
 
-//   departmentTable();
-// }
-
-// // "Add role"
-// function addRole(title, salary, department_id) {
-//   let newRole = db.query('INSERT INTO role SET title = ?, salary = ?, department_id = ?', [title, salary, department_id], function (error, newRole) {
-//     if (error) throw error;
-//     // console.table(manager)
-//   });
-
-//   allRoles();
-// }
+// "Add role"
+function addRole(title, salary, department_id) {
+  let newRole = db.query('INSERT INTO role SET title = ?, salary = ?, department_id = ?', [title, salary, department_id], function (error, newRole) {
+    if (error) throw error;
+  });
+}
 
 // // "View all employees by department",
 // function allByDepartment() {
@@ -358,12 +356,15 @@ function allRoles() {
 // }
 
 // // Shows departments only, without employees
-// function departmentTable() {
+// function departmentList() {
 //   let depTable = db.query(
 //     'SELECT d_name FROM department;',
 
 //     function (error, depTable) {
 //       if (error) throw error;
+
+//       console.log('\n');
+
 //       console.table(depTable);
 //     }
 //   );
