@@ -1,10 +1,6 @@
-const express = require('express');
 const inquirer = require('inquirer');
 const cTable = require('console.table');
 const db = require('./db/connection');
-
-// const PORT = process.env.PORT || 3002;
-// const app = express();
 
 // function inquirer/prompt question
 function firstPrompt() {
@@ -40,7 +36,7 @@ function firstPrompt() {
         // 'Remove role',
         // 'Remove department',
         // 'View total utilized budget by department',
-        // 'Quit'
+        'Quit',
       ],
       // Promise
     })
@@ -244,6 +240,11 @@ function firstPrompt() {
         //     });
 
         //   break;
+
+        // NOT MVP
+        case 'Quit':
+          console.log('Tchau Tchau');
+          process.exit();
       }
     });
 }
@@ -389,9 +390,5 @@ function allRoles() {
 //   );
 //   allByDepartment();
 // }
-
-// Start server after DB connection
-
-// Connects mysql2 server and runs init on startup
 
 firstPrompt();
