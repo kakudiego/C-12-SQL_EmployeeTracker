@@ -29,7 +29,7 @@ function firstPrompt() {
         'Update employee role', // MVP
         // 'View all employees by department',
         // 'View all employees by manager',
-        // 'Remove employee',
+        'Remove employee',
         // 'Update employee manager',
         // 'Remove role',
         // 'Remove department',
@@ -199,22 +199,21 @@ function firstPrompt() {
 
         //   break;
 
-        // // NOT MVP
-        // case 'Remove employee':
-        //   inquirer
-        //     .prompt([
-        //       {
-        //         name: 'id',
-        //         type: 'input',
-        //         message: 'Please enter the Employee id',
-        //       },
-        //     ])
-        //     .then((answers) => {
-        //       // Removes employee to database
-        //       removeEmployee(answers.id);
-        //       firstPrompt();
-        //     });
-        //   break;
+        // NOT MVP
+        case 'Remove employee':
+          inquirer
+            .prompt([
+              {
+                name: 'employee_id',
+                type: 'input',
+                message: 'Enter employee_id:',
+              },
+            ])
+            .then((answers) => {
+              removeEmployee(answers.employee_id);
+            });
+
+          break;
 
         // // NOT MVP
         // case 'Update employee manager':
@@ -414,13 +413,13 @@ function updateRole(employeeId, roleId) {
 //   );
 // }
 
-// // "Remove employee"
-// function removeEmployee(id) {
-//   let add = db.query('DELETE FROM employee WHERE id = ?', [id], function (error, id) {
-//     if (error) throw error;
-//   });
+// "Remove employee"
+function removeEmployee(id) {
+  let add = db.query('DELETE FROM employee WHERE id = ?', [id], function (error, id) {
+    if (error) throw error;
+  });
 
-//   allEmployees();
-// }
+  firstPrompt();
+}
 
 firstPrompt();
