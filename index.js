@@ -76,6 +76,7 @@ function firstPrompt() {
               },
             ])
             .then((answers) => {
+              console.log('\n');
               console.log('+++++ New Department created +++++');
               addDepartment(answers.department);
             });
@@ -170,12 +171,12 @@ function firstPrompt() {
               {
                 name: 'employeeId',
                 type: 'input',
-                message: 'Employee id',
+                message: 'Employee id:',
               },
               {
                 name: 'roleId',
                 type: 'input',
-                message: 'Role id',
+                message: 'Role id:',
               },
             ])
             .then((answers) => {
@@ -286,7 +287,7 @@ function allDepartments() {
 // "View all employees",
 function allEmployees() {
   let employeesAll = db.query(
-    "SELECT employee.id, employee.first_name, employee.last_name, role.title, department.department AS department, role.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN department on role.department_id = department.id LEFT JOIN employee manager on manager.id = employee.manager_id;",
+    "SELECT employee.id, employee.first_name AS 'first name', employee.last_name AS 'last name', role.title AS 'job tittles', department.department AS departments, role.salary AS salaries, CONCAT(manager.first_name, ' ', manager.last_name) AS managers FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department on role.department_id = department.id LEFT JOIN employee manager on manager.id = employee.manager_id;",
 
     function (error, employeesAll) {
       if (error) throw error;
@@ -303,7 +304,7 @@ function allEmployees() {
 // "View all roles"
 function allRoles() {
   let rolesAll = db.query(
-    'SELECT title, salary, department_id FROM role;', // MISSING ROLE ID
+    'SELECT role.title, role.id, department.department, role.salary FROM role LEFT JOIN department ON role.department_id = department.id;',
 
     function (error, rolesAll) {
       if (error) throw error;
