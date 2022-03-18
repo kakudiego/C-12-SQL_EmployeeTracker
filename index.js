@@ -169,18 +169,20 @@ function firstPrompt() {
           inquirer
             .prompt([
               {
-                name: 'employeeId',
+                name: 'employee_Id',
                 type: 'input',
-                message: 'Employee id:',
+                message: 'Enter employee_id:',
               },
               {
-                name: 'roleId',
+                name: 'role_Id',
                 type: 'input',
-                message: 'Role id:',
+                message: 'Enter role_id:',
               },
             ])
             .then((answers) => {
-              updateRole(answers.employeeId, answers.roleId);
+              console.log('\n');
+              console.log('+++++ Role updated +++++');
+              updateRole(answers.employee_Id, answers.role_Id);
             });
 
           break;
@@ -188,14 +190,12 @@ function firstPrompt() {
         // // NOT MVP
         // case 'View all employees by department':
         //   allByDepartment();
-        //   firstPrompt();
 
         //   break;
 
         // // NOT MVP
         // case 'View all employees by manager':
         //   AllByManager();
-        //   firstPrompt();
 
         //   break;
 
@@ -210,6 +210,8 @@ function firstPrompt() {
               },
             ])
             .then((answers) => {
+              console.log('\n');
+              console.log('+++++ Employee fired +++++');
               removeEmployee(answers.employee_id);
             });
 
@@ -233,10 +235,18 @@ function firstPrompt() {
         //     .then((answers) => {
         //       // Updates employee's manager
         //       updateByManager(answers.manager, answers.Employee);
-        //       firstPrompt();
         //     });
 
         //   break;
+
+        // // NOT MVP
+        // case 'Remove role'
+
+        // // NOT MVP
+        // case 'Remove department'
+
+        // // NOT MVP
+        // 'View total utilized budget by department'
 
         // NOT MVP
         case 'Quit':
@@ -345,11 +355,11 @@ function addEmployee(newFirstName, newLastName, role_id, manager) {
 }
 
 // "Update employee role",
-function updateRole(employeeId, roleId) {
+function updateRole(employee_Id, role_Id) {
   let byRole = db.query(
     'UPDATE employee SET role_id = ? WHERE id = ?', // need to add list with employees
 
-    [roleId, employeeId],
+    [role_Id, employee_Id],
     function (error, role) {
       if (error) throw error;
 
