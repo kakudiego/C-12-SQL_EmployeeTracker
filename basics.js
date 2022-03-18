@@ -1,6 +1,7 @@
 // execute to enter in mysql
 mysql -u root -p
 mysql -u local -p
+mysql -u root -p < db/schema.sql
 
 // source executes script files
 source db.sql or db/schema.sql or seed.sql
@@ -41,8 +42,11 @@ SELECT data_for_row_one, boolean_true_false
 FROM new_table
 WHERE boolean_true_false = 0 or 1; // filter operator. < > != OR AND
 
+// show 1 column
+SELECT DISTINCT column_name FROM new_database
+
 // reset the AUTO_INCREMENT column using the ALTER TABLE
-//value: The next value that will be used in the AUTO_INCREMENT column.
+// value: The next value that will be used in the AUTO_INCREMENT column.
 ALTER TABLE new_table AUTO_INCREMENT = value;
 
 // UPDATE statement

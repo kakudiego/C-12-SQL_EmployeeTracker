@@ -105,10 +105,11 @@ function firstPrompt() {
               {
                 name: 'department_id',
                 type: 'input',
-                message: 'Enter the department_id (1=Sales | 2=Engineering | 3=Finance | 4=Legal)',
+                message: 'Enter the department_id (1= Sales | 2= Engineering | 3= Finance | 4= Legal):',
               },
             ])
             .then((answers) => {
+              console.log('\n');
               console.log('+++++ New Role created +++++');
               addRole(answers.title, answers.salary, answers.department_id);
             });
@@ -142,18 +143,22 @@ function firstPrompt() {
                 },
               },
               {
-                name: 'department',
-                type: 'input',
-                message: 'New role id',
+                name: 'role_id',
+                type: 'list',
+                message: 'Role id (1= Sales Lead | 2= Salesperson | 3= Lead Engineer | 4= Software Engineer | 5= Account Manager | 6= Accountant | 7= Legal Team Lead | 8= Lawyer)',
+                choices: ['1', '2', '3', '4', '5', '6', '7', '8'],
               },
               {
-                name: 'manager',
-                type: 'input',
-                message: 'Manager id',
+                name: 'manager_id',
+                type: 'list',
+                message: 'Manager id (1= John | 2= Mike | 3= Ashley | 4= Kevin | 5= Kunal | 6= Malia | 7= Sarah | 8= Tom)',
+                choices: ['1', '2', '3', '4', '5', '6', '7', '8'],
               },
             ])
             .then((answers) => {
-              addEmployee(answers.newFirstName, answers.newLastName, answers.department, answers.manager);
+              console.log('\n');
+              console.log('+++++ New Employee created +++++');
+              addEmployee(answers.newFirstName, answers.newLastName, answers.role_id, answers.manager_id);
             });
 
           break;
@@ -298,7 +303,7 @@ function allEmployees() {
 // "View all roles"
 function allRoles() {
   let rolesAll = db.query(
-    'SELECT title, salary, department_id FROM role;',
+    'SELECT title, salary, department_id FROM role;', // MISSING ROLE ID
 
     function (error, rolesAll) {
       if (error) throw error;
@@ -331,8 +336,8 @@ function addRole(title, salary, department_id) {
 }
 
 // "Add employee"
-function addEmployee(newFirstName, newLastName, department, manager) {
-  let add = db.query('INSERT INTO employee SET first_name = ?, last_name = ?, role_id = ?, manager_id = ?', [newFirstName, newLastName, department, manager], function (error, add) {
+function addEmployee(newFirstName, newLastName, role_id, manager) {
+  let add = db.query('INSERT INTO employee SET first_name = ?, last_name = ?, role_id = ?, manager_id = ?', [newFirstName, newLastName, role_id, manager], function (error, add) {
     if (error) throw error;
 
     firstPrompt();
@@ -342,7 +347,7 @@ function addEmployee(newFirstName, newLastName, department, manager) {
 // "Update employee role",
 function updateRole(employeeId, roleId) {
   let byRole = db.query(
-    'UPDATE employee SET role_id = ? WHERE id = ?',
+    'UPDATE employee SET role_id = ? WHERE id = ?', // need to add list with employees
 
     [roleId, employeeId],
     function (error, role) {
