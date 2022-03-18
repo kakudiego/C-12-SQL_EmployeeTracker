@@ -1,5 +1,6 @@
 // execute to enter in mysql
 mysql -u root -p
+mysql -u local -p
 
 // source executes script files
 source db.sql or db/schema.sql or seed.sql

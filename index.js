@@ -36,6 +36,7 @@ function firstPrompt() {
         // 'View total utilized budget by department',
         'Quit',
       ],
+
       // Promise
     })
     .then((answers) => {
@@ -44,23 +45,17 @@ function firstPrompt() {
         case 'View all departments':
           allDepartments();
 
-          firstPrompt();
-
           break;
 
         // MVP
         case 'View all Roles':
           allRoles();
 
-          firstPrompt();
-
           break;
 
         // MVP
         case 'View all employees':
           allEmployees();
-
-          firstPrompt();
 
           break;
 
@@ -83,8 +78,6 @@ function firstPrompt() {
             .then((answers) => {
               console.log('+++++ New Department created +++++');
               addDepartment(answers.department);
-
-              firstPrompt();
             });
 
           break;
@@ -118,78 +111,73 @@ function firstPrompt() {
             .then((answers) => {
               console.log('+++++ New Role created +++++');
               addRole(answers.title, answers.salary, answers.department_id);
-
-              firstPrompt();
             });
 
           break;
 
-        // // MVP
-        // case 'Add employee':
-        //   inquirer
-        //     .prompt([
-        //       {
-        //         name: 'employeeFirst',
-        //         type: 'input',
-        //         message: "What is the employee's first name?",
-        //         validate: (answer) => {
-        //           if (answer !== '') {
-        //             return true;
-        //           }
-        //           return 'Please enter at least one character.';
-        //         },
-        //       },
-        //       {
-        //         name: 'employeeLast',
-        //         type: 'input',
-        //         message: "What is the employee's last name?",
-        //         validate: (answer) => {
-        //           if (answer !== '') {
-        //             return true;
-        //           }
-        //           return 'Please enter at least one character.';
-        //         },
-        //       },
-        //       {
-        //         name: 'department',
-        //         type: 'input',
-        //         message: 'Please enter the role id',
-        //       },
-        //       {
-        //         name: 'manager',
-        //         type: 'input',
-        //         message: 'Please enter manager id',
-        //       },
-        //     ])
-        //     .then((answers) => {
-        //       addEmployee(answers.employeeFirst, answers.employeeLast, answers.department, answers.manager);
-        //       firstPrompt();
-        //     });
+        // MVP
+        case 'Add employee':
+          inquirer
+            .prompt([
+              {
+                name: 'newFirstName',
+                type: 'input',
+                message: 'First Name of the new employee:',
+                validate: (answer) => {
+                  if (answer !== '') {
+                    return true;
+                  }
+                  return 'Invalid! Try again.';
+                },
+              },
+              {
+                name: 'newLastName',
+                type: 'input',
+                message: 'Last Name of the new employee:',
+                validate: (answer) => {
+                  if (answer !== '') {
+                    return true;
+                  }
+                  return 'Invalid! Try again.';
+                },
+              },
+              {
+                name: 'department',
+                type: 'input',
+                message: 'New role id',
+              },
+              {
+                name: 'manager',
+                type: 'input',
+                message: 'Manager id',
+              },
+            ])
+            .then((answers) => {
+              addEmployee(answers.newFirstName, answers.newLastName, answers.department, answers.manager);
+            });
 
-        //   break;
+          break;
 
-        // // MVP
-        // case 'Update employee role':
-        //   inquirer
-        //     .prompt([
-        //       {
-        //         name: 'employeeId',
-        //         type: 'input',
-        //         message: "Please enter employee's id",
-        //       },
-        //       {
-        //         name: 'roleId',
-        //         type: 'input',
-        //         message: "Please enter role's id",
-        //       },
-        //     ])
-        //     .then((answers) => {
-        //       // Updates employee's role
-        //       updateByRole(answers.employeeId, answers.roleId);
-        //       firstPrompt();
-        //     });
+        // MVP
+        case 'Update employee role':
+          inquirer
+            .prompt([
+              {
+                name: 'employeeId',
+                type: 'input',
+                message: 'Employee id',
+              },
+              {
+                name: 'roleId',
+                type: 'input',
+                message: 'Role id',
+              },
+            ])
+            .then((answers) => {
+              updateRole(answers.employeeId, answers.roleId);
+            });
 
-        //   break;
+          break;
 
         // // NOT MVP
         // case 'View all employees by department':
@@ -247,8 +235,28 @@ function firstPrompt() {
 
         // NOT MVP
         case 'Quit':
-          console.log('Tchau Tchau');
-          process.exit();
+          inquirer
+            .prompt([
+              {
+                name: 'quit',
+                type: 'list',
+                message: 'Quit?',
+                choices: ['Yes', 'No'],
+              },
+            ])
+            .then((answers) => {
+              switch (answers.quit) {
+                case 'Yes':
+                  process.exit(console.log('Tchau Tchau'));
+
+                  break;
+
+                case 'No':
+                  firstPrompt();
+
+                  break;
+              }
+            });
       }
     });
 }
@@ -264,6 +272,8 @@ function allDepartments() {
       console.log('\n');
 
       console.table(departmentAll);
+
+      firstPrompt();
     }
   );
 }
@@ -279,6 +289,8 @@ function allEmployees() {
       console.log('\n');
 
       console.table(employeesAll);
+
+      firstPrompt();
     }
   );
 }
@@ -294,6 +306,8 @@ function allRoles() {
       console.log('\n');
 
       console.table(rolesAll);
+
+      firstPrompt();
     }
   );
 }
@@ -302,6 +316,8 @@ function allRoles() {
 function addDepartment(department) {
   var department = db.query('INSERT INTO department SET department = ?', [department], function (error, department) {
     if (error) throw error;
+
+    firstPrompt();
   });
 }
 
@@ -309,7 +325,32 @@ function addDepartment(department) {
 function addRole(title, salary, department_id) {
   let newRole = db.query('INSERT INTO role SET title = ?, salary = ?, department_id = ?', [title, salary, department_id], function (error, newRole) {
     if (error) throw error;
+
+    firstPrompt();
   });
+}
+
+// "Add employee"
+function addEmployee(newFirstName, newLastName, department, manager) {
+  let add = db.query('INSERT INTO employee SET first_name = ?, last_name = ?, role_id = ?, manager_id = ?', [newFirstName, newLastName, department, manager], function (error, add) {
+    if (error) throw error;
+
+    firstPrompt();
+  });
+}
+
+// "Update employee role",
+function updateRole(employeeId, roleId) {
+  let byRole = db.query(
+    'UPDATE employee SET role_id = ? WHERE id = ?',
+
+    [roleId, employeeId],
+    function (error, role) {
+      if (error) throw error;
+
+      firstPrompt();
+    }
+  );
 }
 
 // // "View all employees by department",
@@ -320,6 +361,8 @@ function addRole(title, salary, department_id) {
 //     function (error, department) {
 //       if (error) throw error;
 //       console.table(department);
+
+//        firstPrompt();
 //     }
 //   );
 // }
@@ -332,6 +375,9 @@ function addRole(title, salary, department_id) {
 //     function (error, manager) {
 //       if (error) throw error;
 //       console.table(manager);
+
+//        firstPrompt();
+
 //     }
 //   );
 // }
@@ -341,18 +387,10 @@ function addRole(title, salary, department_id) {
 //   let updateManager = db.query('UPDATE employee SET manager_id = ? WHERE id = ?', [managerId, employeeId], function (error, updateManager) {
 //     if (error) throw error;
 //     // console.table(manager)
+
 //   });
 
 //   AllByManager();
-// }
-
-// // "Add employee"
-// function addEmployee(employeeFirst, employeeLast, department, manager) {
-//   let add = db.query('INSERT INTO employee SET first_name = ?, last_name = ?, role_id = ?, manager_id = ?', [employeeFirst, employeeLast, department, manager], function (error, add) {
-//     if (error) throw error;
-//   });
-
-//   allEmployees();
 // }
 
 // // Shows departments only, without employees
@@ -377,19 +415,6 @@ function addRole(title, salary, department_id) {
 //   });
 
 //   allEmployees();
-// }
-
-// // "Update employee role",
-// function updateByRole(employeeId, roleId) {
-//   let byRole = db.query(
-//     'UPDATE employee SET role_id = ? WHERE id = ?',
-
-//     [roleId, employeeId],
-//     function (error, role) {
-//       if (error) throw error;
-//     }
-//   );
-//   allByDepartment();
 // }
 
 firstPrompt();
