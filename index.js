@@ -224,16 +224,15 @@ function firstPrompt() {
         //       {
         //         name: 'manager',
         //         type: 'input',
-        //         message: 'Please enter manager id',
+        //         message: 'Enter manager_id:',
         //       },
         //       {
         //         name: 'Employee',
         //         type: 'input',
-        //         message: 'Please enter employee id',
+        //         message: 'Enter employee_id:',
         //       },
         //     ])
         //     .then((answers) => {
-        //       // Updates employee's manager
         //       updateByManager(answers.manager, answers.Employee);
         //     });
 
@@ -262,7 +261,7 @@ function firstPrompt() {
             .then((answers) => {
               switch (answers.quit) {
                 case 'Yes':
-                  process.exit(console.log('Tchau Tchau'));
+                  process.exit(console.log('\n'), console.log('+++++ Tchau Tchau +++++'));
 
                   break;
 
@@ -357,9 +356,9 @@ function addEmployee(newFirstName, newLastName, role_id, manager) {
 // "Update employee role",
 function updateRole(employee_Id, role_Id) {
   let byRole = db.query(
-    'UPDATE employee SET role_id = ? WHERE id = ?', // need to add list with employees
-
+    'UPDATE employee SET role_id = ? WHERE id = ?',
     [role_Id, employee_Id],
+
     function (error, role) {
       if (error) throw error;
 
@@ -375,7 +374,6 @@ function updateRole(employee_Id, role_Id) {
 
 //     function (error, department) {
 //       if (error) throw error;
-//       console.table(department);
 
 //        firstPrompt();
 //     }
@@ -389,36 +387,22 @@ function updateRole(employee_Id, role_Id) {
 
 //     function (error, manager) {
 //       if (error) throw error;
-//       console.table(manager);
 
-//        firstPrompt();
-
+//       firstPrompt();
 //     }
 //   );
 // }
 
 // // "Update employee manager"
 // function updateByManager(managerId, employeeId) {
-//   let updateManager = db.query('UPDATE employee SET manager_id = ? WHERE id = ?', [managerId, employeeId], function (error, updateManager) {
-//     if (error) throw error;
-//     // console.table(manager)
+//   let updateManager = db.query(
+//     'UPDATE employee SET manager_id = ? WHERE id = ?',
+//     [managerId, employeeId],
 
-//   });
-
-//   AllByManager();
-// }
-
-// // Shows departments only, without employees
-// function departmentList() {
-//   let depTable = db.query(
-//     'SELECT d_name FROM department;',
-
-//     function (error, depTable) {
+//     function (error, updateManager) {
 //       if (error) throw error;
 
-//       console.log('\n');
-
-//       console.table(depTable);
+//       firstPrompt();
 //     }
 //   );
 // }
