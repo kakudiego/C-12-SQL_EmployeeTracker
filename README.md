@@ -54,10 +54,14 @@ If you have any questions, contact me at diegokaku@gmail.com.
 
 The following images/video demonstrates the application functionality.
 
+
+
 #### Database Table:
 
-<img src="../C-12/tablesdone2.png">
+![Database Table:](https://user-images.githubusercontent.com/94471049/159197187-dbc5185d-63fc-48dd-8597-7435e9571a23.png)
+
 
 #### Code and Questions:
 
-<img src="../C-12/codeandquestions.png">
+![Code and Questions:](https://user-images.githubusercontent.com/94471049/159197193-19975320-1c53-41b4-944a-1099ddb62d13.png)
+
