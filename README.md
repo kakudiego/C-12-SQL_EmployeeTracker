@@ -54,12 +54,11 @@ If you have any questions, contact me at diegokaku@gmail.com.
 
 The following images/video demonstrates the application functionality.
 
-
+https://user-images.githubusercontent.com/94471049/159197612-bfcf7427-b985-4354-9b76-41021f0efb9f.mp4
 
 #### Database Table:
 
 ![Database Table:](https://user-images.githubusercontent.com/94471049/159197187-dbc5185d-63fc-48dd-8597-7435e9571a23.png)
-
 
 #### Code and Questions:
 
